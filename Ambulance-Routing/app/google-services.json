@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "234864305580",
+    "firebase_url": "https://hackabit-9f6b2.firebaseio.com",
+    "project_id": "hackabit-9f6b2",
+    "storage_bucket": "hackabit-9f6b2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234864305580:android:4273dba5acbfcb9c",
+        "android_client_info": {
+          "package_name": "com.example.yashodeepmahapatra.ambulancerouting"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "234864305580-n2hcfkn57ubvuul0t32o3t8frtssespb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.yashodeepmahapatra.ambulancerouting",
+            "certificate_hash": "8ef9cea1316a5efa80362a1c1897d45131429286"
+          }
+        },
+        {
+          "client_id": "234864305580-rep22ifisvglt9ct4msjs41mafntoacl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.yashodeepmahapatra.ambulancerouting",
+            "certificate_hash": "4d5a276e629f6cff3995eeb3bcf1cdaa280d7250"
+          }
+        },
+        {
+          "client_id": "234864305580-ro3av97vkqahb5iajuc3h0hkva8ugr4e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYdt_64my7ndcYFgQCoEObUvtmuXiBD2U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "234864305580-ro3av97vkqahb5iajuc3h0hkva8ugr4e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
