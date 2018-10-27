@@ -6,6 +6,10 @@ import firebase_admin
 from firebase_admin import db
 import flask
 import json
+import os
+import time
+
+os.environ['GOOGLE_APPLICATION_CREDENTIALS']='C://Users/Hp/Desktop/Hack_Death_Troopers-master/app/creds.json'
 
 firebase_admin.initialize_app(options = {
 	'databaseURL' : 'https://hackabit-9f6b2.firebaseio.com'
@@ -62,8 +66,7 @@ def driver_select(name,new_detail):
 			}
 	return render_template('drivers.html',title = "Index",name = name,new_detail = new_detail, drivers_available = drivers_available)
 @app.route('/<name>/<new_detail>/<i>/livetrack',methods = ['GET'])
-def livetrack(name,new_detail,i):
+def live(name,new_detail,i):
 	driver_data = db.reference('/drivers')
 	driver_ans = driver_data.child(i).get()
-	return render_template('livetrack.html',i = i,new_detail = new_detail, name = name, driver_ans = driver_ans)
-
+	return render_template("livetrack.html",title="livetrack",name = name,new_detail = str(new_detail), driver_ans = driver_ans)
