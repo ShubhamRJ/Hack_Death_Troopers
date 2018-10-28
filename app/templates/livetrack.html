@@ -53,7 +53,6 @@
       //var driverid = String({{new_detail}});
       // var data = firebase.database().ref('/drivers/').child('-LPm2j1I41iW7-beFLdc')[0].val();
       // console.log(data);
-
       var leadsRef = firebase.database().ref('/drivers');
       function initMap(){
         leadsRef.on('value', function(snapshot) {
@@ -62,11 +61,21 @@
         console.log(childData)
         var coordinates = {lat:childData['lat'],lng:childData["lon"]};
         var map = new google.maps.Map(
-            document.getElementById('map'), {zoom: 10, center: coordinates});
+            document.getElementById('map'), {zoom: 15, center: coordinates});
         var marker = new google.maps.Marker({position:coordinates, map: map});
+        {% for i in points %}
+            var road_co = {lat:{{i[0]}},lng:{{i[1]}}};
+            console.log(road_co);
+            var marker1 = new google.maps.Marker({icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                strokeColor: "blue",
+                scale: 5},
+                position:road_co,
+                map: map});
+        {% endfor %}
         });
       });
-      setTimeout(initMap,5000);
+      setTimeout(initMap,20000);
     }
   </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBH7whXsmbq1i8DxDOHICESzsWatstrcOU&callback=initMap"></script>

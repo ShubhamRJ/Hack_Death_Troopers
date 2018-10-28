@@ -8,6 +8,10 @@ import flask
 import json
 import os
 import time
+import googlemaps
+import requests
+import polyline
+import subprocess
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS']='C://Users/Hp/Desktop/Hack_Death_Troopers-master/app/creds.json'
 
@@ -69,4 +73,40 @@ def driver_select(name,new_detail):
 def live(name,new_detail,i):
 	driver_data = db.reference('/drivers')
 	driver_ans = driver_data.child(i).get()
-	return render_template("livetrack.html",title="livetrack",name = name,new_detail = str(new_detail), driver_ans = driver_ans)
+	admins = db.reference('/admins')
+	for i in admins.get():
+		admin = db.reference('/admins').child(i).get()
+		lat,lon = 0,0
+		if admin["email"] == name:
+			lat = admin["lat"]
+			lon = admin["lon"]
+	new_details = db.reference('/details')
+	location_name = new_details.child(new_detail).get()["location"]
+	gmaps = googlemaps.Client(key = 'AIzaSyBH7whXsmbq1i8DxDOHICESzsWatstrcOU')
+	geocode_result = gmaps.geocode(location_name)
+	dlat = (geocode_result[0]['geometry']['location']['lat'])
+	dlon = (geocode_result[0]['geometry']['location']['lng'])
+	# print(dlat)
+	# print(dlon)
+	# print(lat)
+	# print(lon)
+	# requests.get("")
+	new_url = "https://maps.googleapis.com/maps/api/directions/json?origin="+str(lat)+"," + str(lon)+"&destination="+str(dlat)+","+str(dlon)+"&sensor=false"+"&key=AIzaSyBH7whXsmbq1i8DxDOHICESzsWatstrcOU"
+	router = requests.get(new_url)
+	pointer = json.loads(router.text)
+	points = polyline.decode(pointer["routes"][0]["overview_polyline"]["points"])
+	print(points)
+	# for i in range(len(points)-1):
+	# 	new_url = "https://maps.googleapis.com/maps/api/directions/json?origin="+str(points[i][0])+"," + str(points[i][1])+"&destination="+str(points[i+1][0])+","+str(points[i+1][1])+"&sensor=false"+"&key=AIzaSyBH7whXsmbq1i8DxDOHICESzsWatstrcOU"
+	# 	gade = (polyline.decode(json.loads(requests.get(new_url).text)["routes"][0]["overview_polyline"]["points"]))
+	# 	for j in gade:
+	# 		points.append(j)
+	# print(points)
+	fh1 = open('points.txt','w+')
+	fh1.write(str(points))
+	fh1.close()
+	fh2 = open('i.txt','w+')
+	fh2.write(i)
+	fh2.close()
+	os.system('python script.py')
+	return render_template("livetrack.html",title="livetrack",points = points, olat = lat, olon = lon,dlat = dlat, dlon = dlon, name = name,new_detail = str(new_detail), driver_ans = driver_ans)
